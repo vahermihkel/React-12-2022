@@ -7,7 +7,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <img className="Pilt" src="https://estonia.ee/wp-content/uploads/nobe_netist_4.jpg" alt="" />
+      <img className="pilt" src="https://estonia.ee/wp-content/uploads/nobe_netist_4.jpg" alt="" />
       <button className="nupp">Nupp</button>
     </div>
   );
