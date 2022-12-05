@@ -1,0 +1,17 @@
+.pilt {
+  height: 100px;
+  width: 300px;
+}
+
+.pilt:hover {
+  opacity: 0.7;
+}
+
+.nupp {
+  background-color: rgb(129, 3, 3);
+  color: #D3D3D3;
+}
+
+.nupp:hover {
+  font-weight: bold;
+}
