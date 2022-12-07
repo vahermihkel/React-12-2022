@@ -2,16 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+
+// installib projekti navigeerimise jaoks vajalikud koodijupid:
+// 1. npm install react-router-dom
+// koodijupid pannakse node_modules kausta (ehk ta läheb veel suuremaks)
+// tekivad iga kord installides mingisugused vulnerabilities (seda ei pea tähele panema)
+
+// 2. lisame BrowserRouter tagi App tag ümber
+// see annab meie rakendusele navigeerimise võimekuse
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// cd -> change directory
