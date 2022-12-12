@@ -10,6 +10,7 @@
 .nupp {
   background-color: rgb(129, 3, 3);
   color: #D3D3D3;
+  cursor: pointer;
 }
 
 .nupp:hover {
