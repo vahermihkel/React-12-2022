@@ -41,7 +41,7 @@ function Seaded() {
       <br />
       <label>Telefon</label>
       <input ref={telefoniViide} type="text" />
-      <button onClick={salvestaTelefon}>Salvesta email</button>
+      <button onClick={salvestaTelefon}>Salvesta telefon</button>
       <br />
       <button onClick={muudaKeelEE}>EST</button>
       <button onClick={muudaKeelEN}>ENG</button>
