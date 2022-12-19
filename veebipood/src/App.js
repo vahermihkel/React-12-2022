@@ -10,6 +10,10 @@ import Ostukorv from './pages/Ostukorv';
 import Meist from './pages/Meist';
 import Poed from './pages/Poed';
 import Seaded from './pages/Seaded';
+import Tooted from './pages/Tooted';
+import HaldaTooteid from './pages/HaldaTooteid';
+import MuudaToode from './pages/MuudaToode';
+import YksikToode from './pages/YksikToode';
 
 // meil on kahte liiki vead
 
@@ -44,6 +48,12 @@ function App() {
       <Link to="/seaded">
         <button className="nupp">Seaded</button>
       </Link>
+      <Link to="/tooted">
+        <button className="nupp">Tooted</button>
+      </Link>
+      <Link to="/halda-tooteid">
+        <button className="nupp">Halda tooteid</button>
+      </Link>
 
 
       <Routes>
@@ -53,6 +63,10 @@ function App() {
         <Route path="meist" element={ <Meist /> } />
         <Route path="poed" element={ <Poed /> } />
         <Route path="seaded" element={ <Seaded /> } />
+        <Route path="tooted" element={ <Tooted /> } />
+        <Route path="halda-tooteid" element={ <HaldaTooteid /> } />
+        <Route path="muuda" element={ <MuudaToode /> } />
+        <Route path="toode/:index" element={ <YksikToode /> } />
       </Routes>
 
     </div>

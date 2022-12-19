@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function Poed() {
   const [poed, uuendaPoed] = useState(["Kristiine", "Mustamäe", "Kesklinn", "Haabersti", "Õismäe", "Lasnamäe", "Põhja-Tallinn", "Telliskivi", "Tallinna Keskus"]);
@@ -92,32 +92,56 @@ function Poed() {
     uuendaPoed(tulem);
   }
 
+  const kustuta = (j2rjekorraNr) => {
+    //     0            1           2            3
+    // "Kristiine", "Mustamäe", "Kesklinn", "Haabersti", "Õismäe", "Lasnamäe", "Põhja-Tallinn", "Telliskivi", "Tallinna Keskus"
+    poed.splice(j2rjekorraNr, 1); // esimene nr mitmendat kustutan, teine nr mitu tk kustutan
+    uuendaPoed(poed.slice())  // slice() tekitab koopia, sulgude sisu jätan tühjaks
+  }
+
+  const poodRef = useRef(); // koos impordiga!
+
+  const lisa = () => {
+    poed.push(poodRef.current.value);
+    uuendaPoed(poed.slice());
+  }
+
   return (
     <div>
-      <button onClick={paneTagasi}>Pane tagasi originaalsed</button>
-      <button onClick={sorteeriAZ}>Sorteeri A-Z</button>
-      <button onClick={sorteeriZA}>Sorteeri Z-A</button>
-      <button onClick={sorteeriT2htedeJ2rjekorras}>Sorteeri tähtede arvu järgi kasvavalt</button>
-      <button onClick={sorteeriT2hedVastupidi}>Sorteeri tähtede arvu järgi kahanevalt</button>
-      <button onClick={sorteeriAZTeiseJ2rgi}>Sorteeri teise tähe järgi kasvavalt</button>
-      <button onClick={filtreeriM2e}>Jäta alles vaid "mäe"-ga lõppevad</button>
-      <button onClick={filtreeriLinn}>Jäta alles vaid "linn" sisaldavad</button>
-      <button onClick={filtreeriT2heArv8}>Jäta alles kellel tähemärke 8</button>
-      <button onClick={filtreeriT2heArvV2iksemKui7}>Jäta alles kellel tähemärke vähem kui 7</button>
-      <button onClick={filtreeriKellelKolmasS}>Jäta alles kellel kolmas täht "s"</button>
-      <button onClick={muudaK6ikiSuureks}>Muuda kõik suurteks tähtedeks</button>
-      <button onClick={muudaK6ikiV2ikseks}>Muuda kõik väikseks tähtedeks</button>
-      <button onClick={muudaK6igileKriipsudEtte}>Muuda kriipsud ette</button>
-      <button onClick={muudaK6igilePikkuseNrL6ppu}>Muuda number lõppu</button>
-      <button onClick={muudaK6igileIAsemelO}>Muuda i asemel o</button>
+      <div>
+        <button onClick={paneTagasi}>Pane tagasi originaalsed</button>
+        <button onClick={sorteeriAZ}>Sorteeri A-Z</button>
+        <button onClick={sorteeriZA}>Sorteeri Z-A</button>
+        <button onClick={sorteeriT2htedeJ2rjekorras}>Sorteeri tähtede arvu järgi kasvavalt</button>
+        <button onClick={sorteeriT2hedVastupidi}>Sorteeri tähtede arvu järgi kahanevalt</button>
+        <button onClick={sorteeriAZTeiseJ2rgi}>Sorteeri teise tähe järgi kasvavalt</button>
+        <button onClick={filtreeriM2e}>Jäta alles vaid "mäe"-ga lõppevad</button>
+        <button onClick={filtreeriLinn}>Jäta alles vaid "linn" sisaldavad</button>
+        <button onClick={filtreeriT2heArv8}>Jäta alles kellel tähemärke 8</button>
+        <button onClick={filtreeriT2heArvV2iksemKui7}>Jäta alles kellel tähemärke vähem kui 7</button>
+        <button onClick={filtreeriKellelKolmasS}>Jäta alles kellel kolmas täht "s"</button>
+        <button onClick={muudaK6ikiSuureks}>Muuda kõik suurteks tähtedeks</button>
+        <button onClick={muudaK6ikiV2ikseks}>Muuda kõik väikseks tähtedeks</button>
+        <button onClick={muudaK6igileKriipsudEtte}>Muuda kriipsud ette</button>
+        <button onClick={muudaK6igilePikkuseNrL6ppu}>Muuda number lõppu</button>
+        <button onClick={muudaK6igileIAsemelO}>Muuda i asemel o</button>
+      </div>
 
+      <label>Poe nimi</label> <br />
+      <input ref={poodRef} type="text" /> <br />
+      <button onClick={lisa}>Lisa</button> <br />
 
+{/* Warning: class=""   ----> className="" */}
       <div>{poed.length}</div>
-      {poed.map((yksPood,index) => <div key={index}>{yksPood}</div>)}
+      {poed.map((yksPood,index) => 
+        <div key={index}>
+          {index} {yksPood} 
+          <button onClick={() => kustuta(index)}>x</button> 
+        </div>)}
       <div>---------------------------------</div>
-      <div>Kristiine</div>
-      <div>Mustamäe</div>
-      <div>Kesklinn</div>
+      <div>Kristiine <button>x</button> </div>
+      <div>Mustamäe <button>x</button> </div>
+      <div>Kesklinn <button>x</button> </div>
       <div>Haabersti</div>
       <div>Õismäe</div>
       <div>Lasnamäe</div>
