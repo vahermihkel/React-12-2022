@@ -21,7 +21,10 @@ function Tooted() {
       {tooted.map( (element,index) => 
         <div key={index}>
           <Link to={"/toode/" + index}>
-            {element}
+            <img src={element.pilt} alt="" />
+            <div>{element.nimi}</div>
+            <div>{element.hind}</div>
+            <div>{element.aktiivne}</div>
           </Link>
           <button onClick={() => lisaOstukorvi(element)}>Lisa ostukorvi</button>
         </div>)}

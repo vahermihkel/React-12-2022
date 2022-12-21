@@ -3,16 +3,14 @@ import poedFailist from "../poed.json";
 
 function Poed() {
   const [poed, uuendaPoed] = useState(poedFailist.slice());
-  const poodRef = useRef(); // koos impordiga!
-  const aegRef = useRef();
 
   const paneTagasi = () => {
     uuendaPoed(poedFailist.slice());
   }
 
   const sorteeriAZ = () => {
-    // poed.sort();
-    poed.sort((a, b) => a.nimi.localeCompare(b.nimi));
+    poed.sort();
+    // poed.sort((a, b) => a.localeCompare(b));
     uuendaPoed(poed.slice()); // []  --> array, list, massiiv    kui uuendan array'd useState funktsiooni abil
   }
 
@@ -21,48 +19,48 @@ function Poed() {
   // .sort() on tsükkel    1.  Kristiine / Mustamäe    2.  Mustamäe / Kesklinn   3. Kesklinn  / Haabersti .....
 
   const sorteeriZA = () => {
-    poed.sort((a, b) => b.nimi.localeCompare(a.nimi)); // ei tee default kasutusjuhtu
+    poed.sort((a, b) => b.localeCompare(a)); // ei tee default kasutusjuhtu
     uuendaPoed(poed.slice());
   }
 
   const sorteeriT2htedeJ2rjekorras = () => {
-    poed.sort((a, b) => a.nimi.length - b.nimi.length); // ei tee default kasutusjuhtu
+    poed.sort((a, b) => a.length - b.length); // ei tee default kasutusjuhtu
     uuendaPoed(poed.slice());
   }
 
   const sorteeriT2hedVastupidi = () => {
-    poed.sort((a, b) => b.nimi.length - a.nimi.length); // ei tee default kasutusjuhtu
+    poed.sort((a, b) => b.length - a.length); // ei tee default kasutusjuhtu
     uuendaPoed(poed.slice());
   }
 
   const sorteeriAZTeiseJ2rgi = () => {
     // poed.sort(); charAt  ---> character At   ja mingil numbril mis algab 0-st   Lasnamäe   0 - L, 1 - a, 2 - s
-    poed.sort((a, b) => a.nimi.charAt(1).localeCompare(b.nimi.charAt(1)));
+    poed.sort((a, b) => a.charAt(1).localeCompare(b.charAt(1)));
     uuendaPoed(poed.slice());
   }
 
   const filtreeriM2e = () => {
-    const tulem = poed.filter(element => element.nimi.endsWith("mäe") === true);
+    const tulem = poed.filter(element => element.endsWith("mäe") === true);
     uuendaPoed(tulem);
   }
 
   const filtreeriLinn = () => {
-    const tulem = poed.filter(element => element.nimi.includes("linn") === true);
+    const tulem = poed.filter(element => element.includes("linn") === true);
     uuendaPoed(tulem);
   }
 
   const filtreeriT2heArv8 = () => {
-    const tulem = poed.filter(element => element.nimi.length === 8);
+    const tulem = poed.filter(element => element.length === 8);
     uuendaPoed(tulem);
   }
 
   const filtreeriT2heArvV2iksemKui7 = () => {
-    const tulem = poed.filter(element => element.nimi.length <= 7);
+    const tulem = poed.filter(element => element.length <= 7);
     uuendaPoed(tulem);
   }
 
   const filtreeriKellelKolmasS = () => {
-    const tulem = poed.filter(element => element.nimi.charAt(2) === "s"); //Lasnamäe   0 - L, 1 - a, 2 - s
+    const tulem = poed.filter(element => element.charAt(2) === "s"); //Lasnamäe   0 - L, 1 - a, 2 - s
     uuendaPoed(tulem);
   }
 
@@ -71,29 +69,27 @@ function Poed() {
   // map(element => ) ütle millega asendan igaühe
 
   const muudaK6ikiSuureks = () => {
-                //  {n: "Kristiine", a: "9"}     {n: "KRISTIINE", a: "9"}      
-    const tulem = poed.map(element => {return{"nimi":element.nimi.toUpperCase(), "aeg": element.aeg}});
+    const tulem = poed.map(element => element.toUpperCase());
     uuendaPoed(tulem);
   }
 
   const muudaK6ikiV2ikseks = () => {
-                  //      Kristiine     kristiine
-    const tulem = poed.map(element => {return{"nimi":element.nimi.toLowerCase(), "aeg": element.aeg}});
+    const tulem = poed.map(element => element.toLowerCase());
     uuendaPoed(tulem);
   }
 
   const muudaK6igileKriipsudEtte = () => {
-    const tulem = poed.map(element => {return{"nimi": "--" + element.nimi, "aeg": element.aeg}});
+    const tulem = poed.map(element => "--" + element);
     uuendaPoed(tulem);
   }
 
   const muudaK6igilePikkuseNrL6ppu = () => {
-    const tulem = poed.map(element => {return{"nimi": element.nimi + element.nimi.length, "aeg": element.aeg}});
+    const tulem = poed.map(element => element + element.length);
     uuendaPoed(tulem);
   }
 
   const muudaK6igileIAsemelO = () => {
-    const tulem = poed.map(element => {return{"nimi": element.nimi.replaceAll("i", "o"), "aeg": element.aeg}});
+    const tulem = poed.map(element => element.replaceAll("i", "o"));
     uuendaPoed(tulem);
   }
 
@@ -104,8 +100,10 @@ function Poed() {
     uuendaPoed(poed.slice())  // slice() tekitab koopia, sulgude sisu jätan tühjaks
   }
 
+  const poodRef = useRef(); // koos impordiga!
+
   const lisa = () => {
-    poed.push({"nimi": poodRef.current.value, "aeg": aegRef.current.value});
+    poed.push(poodRef.current.value);
     uuendaPoed(poed.slice());
   }
 
@@ -132,17 +130,13 @@ function Poed() {
 
       <label>Poe nimi</label> <br />
       <input ref={poodRef} type="text" /> <br />
-      <label>Poe lahtiolekuaeg</label> <br />
-      <input ref={aegRef} type="text" /> <br />
       <button onClick={lisa}>Lisa</button> <br />
 
 {/* Warning: class=""   ----> className="" */}
       <div>{poed.length}</div>
       {poed.map((yksPood,index) => 
         <div key={index}>
-          {index} {yksPood.nimi} {yksPood.aeg}
-          {/* {{"keskus": "Kristiine"}.keskus}
-          Kristiine */}
+          {index} {yksPood} 
           <button onClick={() => kustuta(index)}>x</button> 
         </div>)}
       <div>---------------------------------</div>

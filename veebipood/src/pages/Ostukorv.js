@@ -27,7 +27,10 @@ function Ostukorv() {
       {ostukorv.length === 0 && <div>Ostukorv on tühi</div>}
       {ostukorv.map( (element, index) =>
         <div key={index}>
-          {element}
+          <img src={element.pilt} alt="" />
+          <div>{element.nimi}</div>
+          <div>{element.hind}</div>
+          <div>{element.aktiivne}</div>
           <button onClick={() => kustuta(index)}>x</button>
           <button onClick={() => lisa(element)}>+</button>
         </div>

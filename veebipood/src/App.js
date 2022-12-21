@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App">
 
-      <Link to="/avaleht">
+      <Link to="/">
         {/* <img className="pilt" src="/minu_pilt.png" alt="" /> */}
         <img className="pilt" src="https://estonia.ee/wp-content/uploads/nobe_netist_4.jpg" alt="" />
       </Link>
@@ -57,7 +57,7 @@ function App() {
 
 
       <Routes>
-        <Route path="avaleht" element={ <Avaleht /> } />
+        <Route path="" element={ <Avaleht /> } />
         <Route path="ostukorv" element={ <Ostukorv /> } />
         <Route path="lisa-toode" element={ <LisaToode /> } />
         <Route path="meist" element={ <Meist /> } />
@@ -65,7 +65,7 @@ function App() {
         <Route path="seaded" element={ <Seaded /> } />
         <Route path="tooted" element={ <Tooted /> } />
         <Route path="halda-tooteid" element={ <HaldaTooteid /> } />
-        <Route path="muuda" element={ <MuudaToode /> } />
+        <Route path="muuda/:i" element={ <MuudaToode /> } />
         <Route path="toode/:index" element={ <YksikToode /> } />
       </Routes>
 

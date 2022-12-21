@@ -7,22 +7,31 @@ import { useRef, useState } from "react";
 
 function LisaToode() {
   const [sonum, uuendaSonum] = useState("Lisa uus toode!");
-  const inputiLuger = useRef();
+  const nimiRef = useRef();
+  const hindRef = useRef();
+  const piltRef = useRef();
+  const aktiivneRef = useRef();
 
   function lisa() {
     // if () {} else {}
     // if (2*6 === 14) {
     // if (inputiLuger.current.value.startsWith("C") === true) {
-    if (inputiLuger.current.value === "") {
+    if (nimiRef.current.value === "") {
     //  uuendaSonum("Tõene, jei!")
       uuendaSonum("Tühja nimega ei saa toodet lisada!")
     } else {
     //  uuendaSonum("Väär :(") 
-      uuendaSonum("Uus toode lisatud " + inputiLuger.current.value); // "Sprite"
+      uuendaSonum("Uus toode lisatud " + nimiRef.current.value); // "Sprite"
 
       let tootedLS = localStorage.getItem("tooted"); // "["Coca-cola","Fanta"]"         null
       tootedLS = JSON.parse(tootedLS) || [];    // ["Coca-cola","Fanta"]                 []
-      tootedLS.push(inputiLuger.current.value); // ["Coca-cola","Fanta", "Sprite"]       ["Sprite"]
+      const uusToode = {
+        "nimi": nimiRef.current.value,
+        "hind": hindRef.current.value,
+        "pilt": piltRef.current.value,
+        "aktiivne": aktiivneRef.current.value,
+      }
+      tootedLS.push(uusToode); // ["Coca-cola","Fanta", "Sprite"]       ["Sprite"]
       tootedLS = JSON.stringify(tootedLS);      // "["Coca-cola","Fanta", "Sprite"]"    "["Sprite"]"
       localStorage.setItem("tooted", tootedLS); // key | value
 
@@ -49,7 +58,13 @@ function LisaToode() {
     <div>
       <div>{sonum}</div>
       <label>Toote nimi</label> <br />
-      <input ref={inputiLuger} type="text" /> <br />
+      <input ref={nimiRef} type="text" /> <br />
+      <label>Toote hind</label> <br />
+      <input ref={hindRef} type="text" /> <br />
+      <label>Toote pilt</label> <br />
+      <input ref={piltRef} type="text" /> <br />
+      <label>Toote aktiivsus</label> <br />
+      <input ref={aktiivneRef} type="text" /> <br />
       <button onClick={lisa}>Sisesta</button>
     </div>
   )
