@@ -16,3 +16,13 @@
 .nupp:hover {
   font-weight: bold;
 }
+
+.aktiivne {
+  border: 1px solid green;
+  background-color: rgb(236, 249, 236);
+}
+
+.mitteaktiivne {
+  border: 1px solid red;
+  background-color: rgb(245, 234, 234);
+}

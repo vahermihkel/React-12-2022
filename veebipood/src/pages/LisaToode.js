@@ -27,9 +27,9 @@ function LisaToode() {
       tootedLS = JSON.parse(tootedLS) || [];    // ["Coca-cola","Fanta"]                 []
       const uusToode = {
         "nimi": nimiRef.current.value,
-        "hind": hindRef.current.value,
+        "hind": Number(hindRef.current.value),
         "pilt": piltRef.current.value,
-        "aktiivne": aktiivneRef.current.value,
+        "aktiivne": aktiivneRef.current.checked,
       }
       tootedLS.push(uusToode); // ["Coca-cola","Fanta", "Sprite"]       ["Sprite"]
       tootedLS = JSON.stringify(tootedLS);      // "["Coca-cola","Fanta", "Sprite"]"    "["Sprite"]"
@@ -60,11 +60,11 @@ function LisaToode() {
       <label>Toote nimi</label> <br />
       <input ref={nimiRef} type="text" /> <br />
       <label>Toote hind</label> <br />
-      <input ref={hindRef} type="text" /> <br />
+      <input ref={hindRef} type="number" /> <br />
       <label>Toote pilt</label> <br />
       <input ref={piltRef} type="text" /> <br />
       <label>Toote aktiivsus</label> <br />
-      <input ref={aktiivneRef} type="text" /> <br />
+      <input ref={aktiivneRef} type="checkbox" /> <br />
       <button onClick={lisa}>Sisesta</button>
     </div>
   )

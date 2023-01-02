@@ -17,9 +17,9 @@ function MuudaToode() {
     // ["Nobe", "Tesla", "Audi"]
     const uuenenudToode = {
       "nimi": nimiRef.current.value,
-      "hind": hindRef.current.value,
+      "hind": Number(hindRef.current.value),
       "pilt": piltRef.current.value,
-      "aktiivne": aktiivneRef.current.value,
+      "aktiivne": aktiivneRef.current.checked,
     }
     tootedLS[i] = uuenenudToode;
     localStorage.setItem("tooted", JSON.stringify(tootedLS));
@@ -32,11 +32,11 @@ function MuudaToode() {
       <label>Toote nimi</label> <br />
       <input ref={nimiRef} defaultValue={leitudToode.nimi} type="text" /> <br />
       <label>Toote hind</label> <br />
-      <input ref={hindRef} defaultValue={leitudToode.hind} type="text" /> <br />
+      <input ref={hindRef} defaultValue={leitudToode.hind} type="number" /> <br />
       <label>Toote pilt</label> <br />
       <input ref={piltRef} defaultValue={leitudToode.pilt} type="text" /> <br />
       <label>Toote aktiivsus</label> <br />
-      <input ref={aktiivneRef} defaultValue={leitudToode.aktiivne} type="text" /> <br />
+      <input ref={aktiivneRef} defaultChecked={leitudToode.aktiivne} type="checkbox" /> <br />
       <button onClick={muuda}>Muuda</button> <br />
     </div>
   )
