@@ -8,7 +8,7 @@ function AdminHome() {
         <Button variant="success">Add product</Button>
       </Link>
       <Link to="/admin/maintain-products">
-        <Button variant="primary">Maintain products</Button>
+        <Button>Maintain products</Button>
       </Link>
     </div>
   )

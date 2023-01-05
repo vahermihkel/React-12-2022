@@ -1,22 +1,39 @@
 import productsFromFile from "../data/products.json";
+import { ToastContainer, toast } from 'react-toastify'; 
+import { useTranslation } from 'react-i18next';
 
 function HomePage() {
+  const { t } = useTranslation();
 
-  const addToCart = () => {}
+  const addToCart = (productClicked) => {
+    let cartLS = localStorage.getItem("cart");
+    cartLS = JSON.parse(cartLS) || [];
+    // kokkulepe: kui index on -1, see tähendab, et seda pole seal arrays olemas
+    const index = cartLS.findIndex(element => element.product.id === productClicked.id);
+    if (index >= 0) {
+      // suurenda kogust
+      // kui ta on juba ostukorvis olemas
+      cartLS[index].quantity = cartLS[index].quantity + 1;
+    } else {
+      // lisa lõppu juurde kogusega 1
+      // kui teda pole ostukorvis olemas
+      cartLS.push({"product": productClicked, "quantity": 1});
+    }
+    cartLS = JSON.stringify(cartLS);
+    localStorage.setItem("cart", cartLS);
+    toast.success(t("added-to-cart"), {"position": "bottom-right", "theme": "dark"});
+  }
+  // parem inspect -> application -> Local Storage   "cart"
 
   return (
     <div>
+      <ToastContainer />
       {productsFromFile.map(element => 
         <div key={element.id}>
           <img src={element.image} alt="" />
-          <div>{element.id}</div> 
           <div>{element.name}</div>
           <div>{element.price}</div>
-          <div>{element.image}</div>
-          <div>{element.category}</div>
-          <div>{element.description}</div>
-          <div>{element.active}</div>
-          <button>Lisa ostukorvi</button>
+          <button onClick={() => addToCart(element)}>Lisa ostukorvi</button>
         </div> )}
     </div>
   )
@@ -31,5 +48,61 @@ function HomePage() {
     <div>seda näeb vaid peale klikkides (üksik toode) - {element.description} - täispikk nimi</div>
     <div>mitteaktiivseid tooteid ei näita välja - {element.active} - kõigile panin active true'ks</div>
     <button>Lisa ostukorvi</button> */
+
+// [
+    // {
+    //   "id": 44272736,
+    //   "image": "https://ir.ebaystatic.com/rs/v/fxxj3ttftm5ltcqnto1o4baovyl.png",
+    //   "name": "Shop on eBay",
+    //   "price": 20,
+    //   "description": "Shop on eBay",
+    //   "category": "jeans",
+    //   "active": true
+    // },
+    // {
+    //   "id": 44272736,
+    //   "image": "https://ir.ebaystatic.com/rs/v/fxxj3ttftm5ltcqnto1o4baovyl.png",
+    //   "name": "Shop on eBay",
+    //   "price": 20,
+    //   "description": "Shop on eBay",
+    //   "category": "jeans",
+    //   "active": true
+    // },
+    // {
+    //   "id": 62720814,
+    //   "image": "https://i.ebayimg.com/thumbs/images/g/mTkAAOSw9IZf46Kp/s-l225.webp",
+    //   "name": "Pantalone Uomo Invernale",
+    //   "price": 31.66,
+    //   "description": "Pantalone Uomo Invernale Felpato Termico Jeans Comodo Imbottito In Pile VEQUE",
+    //   "category": "jeans",
+    //   "active": true
+    // },
+// ]
+
+
+// [
+    //{product: {
+    //   "id": 44272736,
+    //   "image": "https://ir.ebaystatic.com/rs/v/fxxj3ttftm5ltcqnto1o4baovyl.png",
+    //   "name": "Shop on eBay",
+    //   "price": 20,
+    //   "description": "Shop on eBay",
+    //   "category": "jeans",
+    //   "active": true
+    // },
+    // quantity: 3
+    //},
+    //{product:  {
+    //   "id": 62720814,
+    //   "image": "https://i.ebayimg.com/thumbs/images/g/mTkAAOSw9IZf46Kp/s-l225.webp",
+    //   "name": "Pantalone Uomo Invernale",
+    //   "price": 31.66,
+    //   "description": "Pantalone Uomo Invernale Felpato Termico Jeans Comodo Imbottito In Pile VEQUE",
+    //   "category": "jeans",
+    //   "active": true
+    // },
+    // quantity: 3
+    //},
+// ]
 
 export default HomePage

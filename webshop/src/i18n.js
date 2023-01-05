@@ -7,20 +7,20 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
-      "Welcome to React": "Welcome to React and react-i18next",
       "admin": "To admin view",
       "shops": "Our shops",
       "contact": "Contact us",
       "cart": "Cart",
+      "added-to-cart": "Successfully added to cart"
     }
   },
   ee: {
     translation: {
-      "Welcome to React": "Bienvenue à React et react-i18next",
       "admin": "Administraatori vaatesse",
       "shops": "Meie poed",
       "contact": "Kontakteeru meiega",
       "cart": "Ostukorvi",
+      "added-to-cart": "Edukalt ostukorvi lisatud"
     }
   }
 };
