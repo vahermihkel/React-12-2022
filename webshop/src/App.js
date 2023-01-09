@@ -49,7 +49,7 @@ function App() {
         <Route path="product" element={ <SingleProduct /> }  />
         <Route path="admin" element={ <AdminHome /> }  />
         <Route path="admin/add-product" element={ <AddProduct /> }  />
-        <Route path="admin/edit-product" element={ <EditProduct /> }  />
+        <Route path="admin/edit-product/:productId" element={ <EditProduct /> }  />
         <Route path="admin/maintain-categories" element={ <MaintainCategories /> }  />
         <Route path="admin/maintain-products" element={ <MaintainProducts /> }  />
         <Route path="admin/maintain-shops" element={ <MaintainShops /> }  />
@@ -70,13 +70,41 @@ export default App;
 // 02.01 -- 7xx  koju: Bootstrap mõnes teises projektis (eesti k veebileht, tegelased, uudised)
 // 04.01 -- 8xx  koju: tõlge (i18next) mõnes teises projektis (eesti k veebileht, tegelased, uudised)
 // 05.01 -- 9 17.00-20.15
-// 09.01 -- 10
-// 11.01 -- 11
-// 12.01 -- 12 17.00-20.15
-// 16.01 -- 13
-// 18.01 -- 14
-// 19.01 -- 15 17.00-20.15
-// 23.01 -- 16
+// 09.01 -- 10   13.00-16.45     14.45-15.00
+// EditProduct --- eesti k järgi
+// KOJU: AddProduct, SingleProduct, Sorteerimine (eesti k järgi), Kategooriate alusel filtreerimine
+// 2 faili array'de
+// array'd: ID unikaalsuse kontroll, otsingu
 
-// 9,10 -- 17
-// 13-17.02 -- 18
+// 11.01 -- 11  9.00-10.30
+// Firebase-i üles (eesti k järgi), kaardirakendus (Leaflet), e-maili saatmine (emailjs)
+// https://react-leaflet.js.org/
+// https://www.emailjs.com/
+
+// 12.01 -- 12 17.30-20.45
+// pakiatuomaatide võtmine,
+// andmebaasi tooted üles, Firebase, API päringud, fetch(), useEffect, Postman
+// KOJU: API päringute failid
+
+// 16.01 -- 13  13.00-16.45
+// kategooriad andmebaasi
+// Leafleti poed andmebaasi
+// makse (Everypay)
+// loaderid
+
+// 18.01 -- 14   13.00-16.45
+// child/parent componendid props
+// dünaamiline CSS
+// globaalne muutuja useContext - ostukorvi kogusumma
+// vormi valideerimine
+
+// 19.01 -- 15 17.00-20.15
+// globaalne muutuja sisselogimine/registreerumine
+// et näha admini vaadet
+// peidame ära nupu "Admin vaatesse" kui pole sisse logitud
+// kui minnakse ise localhost:3000/admin , siis suunab viisakalt localhost:3000/login
+
+// 23.01 -- 16  karusell-galerii, faili üleslaadimine Firebase-i, radio buttonid
+
+// 9/10.02 -- 17 --- proovitöö minupoolne variant
+// 13-17.02 -- 18 --- projekti esitlemine
