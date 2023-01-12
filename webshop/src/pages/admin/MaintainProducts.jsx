@@ -1,11 +1,21 @@
-import { useRef, useState } from "react";
-import productsFromFile from "../../data/products.json";
+import { useEffect, useRef, useState } from "react";
+import config from "../../data/config.json";
 import { ToastContainer, toast } from 'react-toastify'; 
 import { Link } from "react-router-dom";
 
 function MaintainProducts() {
-  const [products, setProducts] = useState(productsFromFile);
+  const [products, setProducts] = useState([]);
+  const [dbProducts, setDbProducts] = useState([]);
   const searchedRef = useRef();
+
+  useEffect(() => {
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        setProducts(json);
+        setDbProducts(json);
+      });
+  }, []);
 
   const deleteProduct = (index) => {
     products.splice(index, 1);
@@ -14,7 +24,7 @@ function MaintainProducts() {
   }
 
   const searchFromProducts = () => {
-    const result = productsFromFile.filter(element => 
+    const result = dbProducts.filter(element => 
       element.name.toLowerCase().includes(searchedRef.current.value.toLowerCase()));
     setProducts(result);
   }

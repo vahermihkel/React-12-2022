@@ -5,7 +5,9 @@ export const ContactUs = () => {
   const form = useRef();
 
   const sendEmail = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // kui form submititakse, 
+    // siis tehakse by default refresh,
+    // aga preventDefault takistab refreshi tegemist
 
     emailjs.sendForm('service_fum24bj', 'template_ld2lsyd', form.current, 'Xbn0xj_4LjNugxYGl')
       .then((result) => {

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom";
 import "../css/Cart.css";
 // import { Button } from "react-bootstrap";
@@ -6,6 +6,17 @@ import Button from '@mui/material/Button';
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
+  const [parcelMachines, setParcelMachines] = useState([]);
+  const [dbParcelMachines, setDbParcelMachines] = useState([]);
+
+  useEffect(() => { // useEffect KUI tulen lehele ja kohe toimub API päring
+    fetch("https://www.omniva.ee/locations.json")
+      .then(res => res.json())
+      .then(json => {
+        setParcelMachines(json);
+        setDbParcelMachines(json);
+      })
+  }, []);
 
   const empty = () => {
     setCart([]);
@@ -37,6 +48,16 @@ function Cart() {
     cart.forEach(element => cartsum = cartsum + element.product.price * element.quantity );
     return cartsum.toFixed(2);
   }
+
+  const searchedRef = useRef();
+
+  const searchFromParcelMachines = () => {
+    const result = dbParcelMachines.filter(element => 
+      element.NAME.toLowerCase().includes(searchedRef.current.value.toLowerCase())
+      );
+    setParcelMachines(result);
+  }
+
   return (
     <div>
       { cart.length === 0 && <div>Ostukorv on tühi. <Link to="/">Lisa tooteid</Link></div>}
@@ -60,7 +81,16 @@ function Cart() {
         </div> )}
       { cart.length > 0 && 
         <div className="cart-bottom">
-          Kokku: {calculateCartsum()} €
+          <div>Kokku: {calculateCartsum()} €</div>
+          <input ref={searchedRef} onChange={searchFromParcelMachines} placeholder="Otsi siit" type="text" />
+          <br />
+          <select>
+            {parcelMachines
+            .filter(element => element.NAME !== "1. eelistus minu.omniva.ee-s")
+            .filter(element => element.A0_NAME === "EE")
+            .map(element => <option key={element.NAME}>{element.NAME}</option> )}
+            {parcelMachines.length === 0 && <option disabled selected>Täpsusta otsingut</option> }
+          </select>
         </div>}
     </div>
   )

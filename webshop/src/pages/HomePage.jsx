@@ -1,9 +1,17 @@
-import productsFromFile from "../data/products.json";
+import config from "../data/config.json";
 import { ToastContainer, toast } from 'react-toastify'; 
 import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 
 function HomePage() {
   const { t } = useTranslation();
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => setProducts(json));
+  }, []);
 
   const addToCart = (productClicked) => {
     let cartLS = localStorage.getItem("cart");
@@ -28,7 +36,7 @@ function HomePage() {
   return (
     <div>
       <ToastContainer />
-      {productsFromFile.map(element => 
+      {products.map(element => 
         <div key={element.id}>
           <img src={element.image} alt="" />
           <div>{element.name}</div>

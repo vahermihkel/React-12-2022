@@ -87,6 +87,7 @@ export default App;
 // KOJU: API päringute failid
 
 // 16.01 -- 13  13.00-16.45
+// andmebaasi panemine - Editis ja Addis
 // kategooriad andmebaasi
 // Leafleti poed andmebaasi
 // makse (Everypay)

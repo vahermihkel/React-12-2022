@@ -1,14 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import productsFromFile from "../../data/products.json";
+import config from "../../data/config.json";
 
 
 function EditProduct() {
+  const [dbProducts, setDbProducts] = useState([]);
   const [idUnique, setIdUnique] = useState(true);
   const { productId } = useParams(); // path="admin/edit-product/:productId"
                                                        // 68186744 === "68186744"
-  const productFound = productsFromFile.find(element => element.id === Number(productId));
-  const index = productsFromFile.indexOf(productFound);
+  const productFound = dbProducts.find(element => element.id === Number(productId));
+  const index = dbProducts.indexOf(productFound);
   // productFound võib olla, kas õige toode mida ta leidis VÕI tühjus ehk undefined kui ühtegi sellist pole
   // null (localStorage) ja undefined (kui toimus otsing/tsükkel) on tühjused
   const idRef = useRef();
@@ -19,6 +20,14 @@ function EditProduct() {
   const descriptionRef = useRef();
   const activeRef = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        setDbProducts(json);
+      });
+  }, []);
 
   const changeProduct = () => {
     const updatedProduct = {
@@ -31,12 +40,13 @@ function EditProduct() {
       "active": activeRef.current.checked,
     }
     // .push(newProduct);
-    productsFromFile[index] = updatedProduct;
+    dbProducts[index] = updatedProduct;
     navigate("/admin/maintain-products");
+    // muutmine ei tööta --- eraldi API päringu ülalolevale veebilehele      
   }
 
   const checkIdUniqueness = () => {
-    const found = productsFromFile.find(element => element.id === Number(idRef.current.value));
+    const found = dbProducts.find(element => element.id === Number(idRef.current.value));
     if (found === undefined) {     
       setIdUnique(true);
     } else {
