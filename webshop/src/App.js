@@ -2,8 +2,8 @@ import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
-import Shops from "./pages/Shops";
-import ContactUs from "./pages/ContactUs";
+import Shops from "./pages/Shops"; // imporditud on default kaudu:   export default Shops
+import { ContactUs } from "./pages/ContactUs"; // imporditud const kaudu:   export const ContactUs
 import SingleProduct from "./pages/SingleProduct";
 import AdminHome from "./pages/admin/AdminHome";
 import AddProduct from "./pages/admin/AddProduct";
