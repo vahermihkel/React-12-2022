@@ -20,7 +20,10 @@ function MaintainProducts() {
   const deleteProduct = (index) => {
     products.splice(index, 1);
     setProducts(products.slice());
-    toast.error("Toode kustutatud!", {"position": "bottom-right", "theme": "dark"});
+    fetch(config.productsDbUrl, {"method": "PUT", "body": JSON.stringify(dbProducts)})
+      .then(() => {
+        toast.error("Toode kustutatud!", {"position": "bottom-right", "theme": "dark"});
+      })  
   }
 
   const searchFromProducts = () => {

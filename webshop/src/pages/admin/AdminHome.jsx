@@ -10,6 +10,10 @@ function AdminHome() {
       <Link to="/admin/maintain-products">
         <Button>Maintain products</Button>
       </Link>
+      {/* App.js sees: admin/maintain-categories */}
+      <Link to="/admin/maintain-categories">
+        <Button>Maintain categories</Button>
+      </Link>
     </div>
   )
 }

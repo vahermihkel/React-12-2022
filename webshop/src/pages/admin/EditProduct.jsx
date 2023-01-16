@@ -41,8 +41,11 @@ function EditProduct() {
     }
     // .push(newProduct);
     dbProducts[index] = updatedProduct;
-    navigate("/admin/maintain-products");
     // muutmine ei tööta --- eraldi API päringu ülalolevale veebilehele      
+    fetch(config.productsDbUrl, {"method": "PUT", "body": JSON.stringify(dbProducts)})
+      .then(() => {
+        navigate("/admin/maintain-products");
+      })  
   }
 
   const checkIdUniqueness = () => {

@@ -6,11 +6,15 @@ import { useEffect, useState } from 'react';
 function HomePage() {
   const { t } = useTranslation();
   const [products, setProducts] = useState([]);
+  const [dbProducts, setDbProducts] = useState([]);
 
   useEffect(() => {
     fetch(config.productsDbUrl)
       .then(res => res.json())
-      .then(json => setProducts(json));
+      .then(json => {
+        setProducts(json);
+        setDbProducts(json);
+      });
   }, []);
 
   const addToCart = (productClicked) => {
@@ -33,8 +37,23 @@ function HomePage() {
   }
   // parem inspect -> application -> Local Storage   "cart"
 
+  const filterByCategory = (categoryClicked) => {
+    const result = dbProducts.filter(element => element.category === categoryClicked);
+    setProducts(result);
+  }
+
+  const categories = [...new Set(dbProducts.map(element => element.category))];
+
   return (
     <div>
+      <button>Sorteeri AZ - kodus</button>
+      <button>Sorteeri ZA - kodus</button>
+      <button>Sorteeri hind kasvavalt - kodus</button>
+      <button>Sorteeri hind kahanevalt - kodus</button>
+      <div>{products.length} tk</div>
+      {/* <button onClick={() => filterByCategory("belts")}>belts</button>
+      <button onClick={() => filterByCategory("jeans")}>jeans</button> */}
+      {categories.map(element => <button onClick={() => filterByCategory(element)}>{element}</button>)}
       <ToastContainer />
       {products.map(element => 
         <div key={element.id}>

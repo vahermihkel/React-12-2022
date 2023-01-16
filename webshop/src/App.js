@@ -91,9 +91,9 @@ export default App;
 // kategooriad andmebaasi
 // Leafleti poed andmebaasi
 // makse (Everypay)
-// loaderid
 
 // 18.01 -- 14   13.00-16.45
+// loaderid
 // child/parent componendid props
 // dünaamiline CSS
 // globaalne muutuja useContext - ostukorvi kogusumma
@@ -107,5 +107,5 @@ export default App;
 
 // 23.01 -- 16  karusell-galerii, faili üleslaadimine Firebase-i, radio buttonid
 
-// 9/10.02 -- 17 --- proovitöö minupoolne variant
+// 11.02 -- 17 --- proovitöö minupoolne variant
 // 13-17.02 -- 18 --- projekti esitlemine

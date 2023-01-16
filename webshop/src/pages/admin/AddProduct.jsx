@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import config from "../../data/config.json";
+import { ToastContainer, toast } from 'react-toastify'; 
 
 function AddProduct() {
     const [dbProducts, setDbProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+
     const [idUnique, setIdUnique] = useState(true);
     const idRef = useRef();
     const nameRef = useRef();
@@ -12,12 +15,16 @@ function AddProduct() {
     const descriptionRef = useRef();
     const activeRef = useRef();
 
-    useEffect(() => {
+    useEffect(() => { // VÕTMISEKS
       fetch(config.productsDbUrl)
         .then(res => res.json())
         .then(json => {
           setDbProducts(json);
         });
+
+      fetch(config.categoriesDbUrl)
+        .then(res => res.json())
+        .then(json => setCategories(json || []));
     }, []);
 
     const addProduct = () => {
@@ -31,7 +38,18 @@ function AddProduct() {
             active: activeRef.current.checked
         }
         dbProducts.push(newProduct); 
-        // lisamine ei tööta --- eraldi API päringu ülalolevale veebilehele      
+        // LISAMISEKS
+        fetch(config.productsDbUrl, {"method": "PUT", "body": JSON.stringify(dbProducts)})
+          .then(() => {
+            toast.success("Toode lisatud!", {"position": "bottom-right", "theme": "dark"});
+            idRef.current.value = "";
+            nameRef.current.value = "";
+            priceRef.current.value = "";
+            imageRef.current.value = "";
+            categoryRef.current.value = "";
+            descriptionRef.current.value = "";
+            activeRef.current.checked = false;
+          })    
     }
 
     const checkIdUniqueness = () => {
@@ -45,6 +63,7 @@ function AddProduct() {
 
     return (
         <div>
+            <ToastContainer />
             {idUnique === false && <div>Id ei ole unikaalne!</div>}
             <label>ID:</label><br />
             <input ref={idRef} type="number" onChange={checkIdUniqueness} /><br />
@@ -55,7 +74,10 @@ function AddProduct() {
             <label>Image:</label><br />
             <input ref={imageRef} type="text" /><br />
             <label>Category:</label><br />
-            <input ref={categoryRef} type="text" /><br />
+            {/* <input ref={categoryRef} type="text" /><br /> */}
+            <select ref={categoryRef}>
+              {categories.map(element => <option>{element.name}</option> )}
+            </select> <br />
             <label>Description:</label><br />
             <input ref={descriptionRef} type="text" /><br />
             <label>Active:</label><br />
