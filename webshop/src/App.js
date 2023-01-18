@@ -46,7 +46,7 @@ function App() {
         <Route path="cart" element={ <Cart /> }  />
         <Route path="shops" element={ <Shops /> }  />
         <Route path="contact" element={ <ContactUs /> }  />
-        <Route path="product" element={ <SingleProduct /> }  />
+        <Route path="product/:productId" element={ <SingleProduct /> }  />
         <Route path="admin" element={ <AdminHome /> }  />
         <Route path="admin/add-product" element={ <AddProduct /> }  />
         <Route path="admin/edit-product/:productId" element={ <EditProduct /> }  />
@@ -89,17 +89,18 @@ export default App;
 // 16.01 -- 13  13.00-16.45
 // andmebaasi panemine - Editis ja Addis
 // kategooriad andmebaasi
-// Leafleti poed andmebaasi
 // makse (Everypay)
 
 // 18.01 -- 14   13.00-16.45
+// Leafleti poed andmebaasi
 // loaderid
-// child/parent componendid props
-// dünaamiline CSS
-// globaalne muutuja useContext - ostukorvi kogusumma
 // vormi valideerimine
+// dünaamiline CSS
+// child/parent componendid props
 
 // 19.01 -- 15 17.00-20.15
+// child/parent componendid props
+// globaalne muutuja useContext - ostukorvi kogusumma
 // globaalne muutuja sisselogimine/registreerumine
 // et näha admini vaadet
 // peidame ära nupu "Admin vaatesse" kui pole sisse logitud

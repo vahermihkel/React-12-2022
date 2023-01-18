@@ -14,6 +14,9 @@ function AdminHome() {
       <Link to="/admin/maintain-categories">
         <Button>Maintain categories</Button>
       </Link>
+      <Link to="/admin/maintain-shops">
+        <Button>Maintain shops</Button>
+      </Link>
     </div>
   )
 }

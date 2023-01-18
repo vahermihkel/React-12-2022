@@ -2,11 +2,14 @@ import config from "../data/config.json";
 import { ToastContainer, toast } from 'react-toastify'; 
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 
 function HomePage() {
   const { t } = useTranslation();
   const [products, setProducts] = useState([]);
   const [dbProducts, setDbProducts] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(config.productsDbUrl)
@@ -14,6 +17,7 @@ function HomePage() {
       .then(json => {
         setProducts(json);
         setDbProducts(json);
+        setLoading(false);
       });
   }, []);
 
@@ -44,12 +48,48 @@ function HomePage() {
 
   const categories = [...new Set(dbProducts.map(element => element.category))];
 
+  const sortAZ = () => {
+    products.sort((a, b) => a.name.localeCompare(b.name));
+    setProducts(products.slice());
+  }
+
+  const sortZA = () => {
+    products.sort((a, b) => b.name.localeCompare(a.name));
+    setProducts(products.slice());
+  }
+
+  const sortPriceAsc = () => {
+    products.sort((a, b) => a.price - b.price);
+    setProducts(products.slice());
+  }
+
+  const sortPriceDesc = () => {
+    products.sort((a, b) => b.price - a.price);
+    setProducts(products.slice());
+  }
+
+  const sortDateAsc = () => {
+    products.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf());
+    setProducts(products.slice());
+  }
+
+  const sortDateDesc = () => {
+    products.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+    setProducts(products.slice());
+  }
+
+  if (isLoading === true) {
+    return (<Spinner />)
+  }
+
   return (
     <div>
-      <button>Sorteeri AZ - kodus</button>
-      <button>Sorteeri ZA - kodus</button>
-      <button>Sorteeri hind kasvavalt - kodus</button>
-      <button>Sorteeri hind kahanevalt - kodus</button>
+      <button onClick={sortAZ}>Sorteeri A-Z</button>
+      <button onClick={sortZA}>Sorteeri Z-A</button>
+      <button onClick={sortPriceAsc}>Hind kasvavalt</button>
+      <button onClick={sortPriceDesc}>Hind kahanevalt</button>
+      <button onClick={sortDateAsc}>Sorteeri hiljem lisatud enne</button>
+      <button onClick={sortDateDesc}>Sorteeri varem lisatud enne</button>
       <div>{products.length} tk</div>
       {/* <button onClick={() => filterByCategory("belts")}>belts</button>
       <button onClick={() => filterByCategory("jeans")}>jeans</button> */}
@@ -57,9 +97,11 @@ function HomePage() {
       <ToastContainer />
       {products.map(element => 
         <div key={element.id}>
-          <img src={element.image} alt="" />
-          <div>{element.name}</div>
-          <div>{element.price}</div>
+          <Link to={"/product/" + element.id}>
+            <img src={element.image} alt="" />
+            <div>{element.name}</div>
+            <div>{element.price}</div>
+          </Link>
           <button onClick={() => addToCart(element)}>Lisa ostukorvi</button>
         </div> )}
     </div>

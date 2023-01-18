@@ -1,22 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom";
 import "../css/Cart.css";
 // import { Button } from "react-bootstrap";
 import Button from '@mui/material/Button';
+import ParcelMachines from "../components/cart/ParcelMachines";
 
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
-  const [parcelMachines, setParcelMachines] = useState([]);
-  const [dbParcelMachines, setDbParcelMachines] = useState([]);
-
-  useEffect(() => { // useEffect KUI tulen lehele ja kohe toimub API päring
-    fetch("https://www.omniva.ee/locations.json")
-      .then(res => res.json())
-      .then(json => {
-        setParcelMachines(json);
-        setDbParcelMachines(json);
-      })
-  }, []);
 
   const empty = () => {
     setCart([]);
@@ -49,14 +39,6 @@ function Cart() {
     return cartsum.toFixed(2);
   }
 
-  const searchedRef = useRef();
-
-  const searchFromParcelMachines = () => {
-    const result = dbParcelMachines.filter(element => 
-      element.NAME.toLowerCase().includes(searchedRef.current.value.toLowerCase())
-      );
-    setParcelMachines(result);
-  }
 
   const pay = () => {
     const paymentUrl = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
@@ -103,76 +85,14 @@ function Cart() {
       { cart.length > 0 && 
         <div className="cart-bottom">
           <div>Kokku: {calculateCartsum()} €</div>
-          <input ref={searchedRef} onChange={searchFromParcelMachines} placeholder="Otsi siit" type="text" />
-          <br />
-          <select>
-            {parcelMachines
-            .filter(element => element.NAME !== "1. eelistus minu.omniva.ee-s")
-            .filter(element => element.A0_NAME === "EE")
-            .map(element => <option key={element.NAME}>{element.NAME}</option> )}
-            {parcelMachines.length === 0 && <option disabled selected>Täpsusta otsingut</option> }
-          </select>
-
+          <ParcelMachines />
           <button onClick={pay}>Maksa</button>
         </div>}
     </div>
   )
 }
 
-// [
-    // {
-    //   "id": 44272736,
-    //   "image": "https://ir.ebaystatic.com/rs/v/fxxj3ttftm5ltcqnto1o4baovyl.png",
-    //   "name": "Shop on eBay",
-    //   "price": 20,
-    //   "description": "Shop on eBay",
-    //   "category": "jeans",
-    //   "active": true
-    // },
-    // {
-    //   "id": 44272736,
-    //   "image": "https://ir.ebaystatic.com/rs/v/fxxj3ttftm5ltcqnto1o4baovyl.png",
-    //   "name": "Shop on eBay",
-    //   "price": 20,
-    //   "description": "Shop on eBay",
-    //   "category": "jeans",
-    //   "active": true
-    // },
-    // {
-    //   "id": 62720814,
-    //   "image": "https://i.ebayimg.com/thumbs/images/g/mTkAAOSw9IZf46Kp/s-l225.webp",
-    //   "name": "Pantalone Uomo Invernale",
-    //   "price": 31.66,
-    //   "description": "Pantalone Uomo Invernale Felpato Termico Jeans Comodo Imbottito In Pile VEQUE",
-    //   "category": "jeans",
-    //   "active": true
-    // },
-// ]
-
-
-// [
-    //{product: {
-    //   "id": 44272736,
-    //   "image": "https://ir.ebaystatic.com/rs/v/fxxj3ttftm5ltcqnto1o4baovyl.png",
-    //   "name": "Shop on eBay",
-    //   "price": 20,
-    //   "description": "Shop on eBay",
-    //   "category": "jeans",
-    //   "active": true
-    // },
-    // quantity: 3
-    //},
-    //{product:  {
-    //   "id": 62720814,
-    //   "image": "https://i.ebayimg.com/thumbs/images/g/mTkAAOSw9IZf46Kp/s-l225.webp",
-    //   "name": "Pantalone Uomo Invernale",
-    //   "price": 31.66,
-    //   "description": "Pantalone Uomo Invernale Felpato Termico Jeans Comodo Imbottito In Pile VEQUE",
-    //   "category": "jeans",
-    //   "active": true
-    // },
-    // quantity: 3
-    //},
-// ]
+// 150+ rida -- hakkame mõtlema väljatõstmise peale
+// 200 rida -- tõstame välja
 
 export default Cart

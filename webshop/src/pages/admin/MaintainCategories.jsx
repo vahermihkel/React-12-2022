@@ -1,14 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import config from "../../data/config.json";
 
 function MaintainCategories() {
   const [categories, setCategories] = useState([]);
   const categoryRef = useRef();
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(config.categoriesDbUrl)
       .then(res => res.json())
-      .then(json => setCategories(json || []));
+      .then(json => {
+        setCategories(json || []);
+        setLoading(false);
+      });
   }, []);
 
   const addCategory = () => {
@@ -24,6 +29,10 @@ function MaintainCategories() {
     categories.splice(index,1);
     fetch(config.categoriesDbUrl, {"method": "PUT", "body": JSON.stringify(categories)})
       .then(() => setCategories(categories.slice()));
+  }
+
+  if (isLoading === true) {
+    return (<Spinner />)
   }
 
   return (
