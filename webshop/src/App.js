@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
@@ -11,35 +11,13 @@ import EditProduct from "./pages/admin/EditProduct";
 import MaintainCategories from "./pages/admin/MaintainCategories";
 import MaintainProducts from "./pages/admin/MaintainProducts";
 import MaintainShops from "./pages/admin/MaintainShops";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { useTranslation } from 'react-i18next';
+import NavigationBar from './components/NavigationBar';
 
 function App() {
-  const { t, i18n } = useTranslation();
-
-  const changeLang = (newLang) => {
-    i18n.changeLanguage(newLang);
-    localStorage.setItem("language", newLang);
-  }
-
   return (
     <div className="App">
       
-      <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand as={Link} to="/">Webshop</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/admin">{t("admin")}</Nav.Link>
-            <Nav.Link as={Link} to="/shops">{t("shops")}</Nav.Link>
-            <Nav.Link as={Link} to="/contact">{t("contact")}</Nav.Link>
-            <Nav.Link as={Link} to="/cart">{t("cart")}</Nav.Link>
-          </Nav>
-          <img className="lang" onClick={() => changeLang("en")} src="/english.png" alt="" />
-          <img className="lang" onClick={() => changeLang("ee")} src="/estonia.png" alt="" />
-        </Container>
-      </Navbar>
+      <NavigationBar />
 
       <Routes>
         <Route path="" element={ <HomePage /> }  />
@@ -101,12 +79,13 @@ export default App;
 // 19.01 -- 15 17.00-20.15
 // child/parent componendid props
 // globaalne muutuja useContext - ostukorvi kogusumma
+// karusell-galerii, faili üleslaadimine Firebase-i, radio buttonid
+
+// 23.01 -- 16
 // globaalne muutuja sisselogimine/registreerumine
 // et näha admini vaadet
 // peidame ära nupu "Admin vaatesse" kui pole sisse logitud
 // kui minnakse ise localhost:3000/admin , siis suunab viisakalt localhost:3000/login
-
-// 23.01 -- 16  karusell-galerii, faili üleslaadimine Firebase-i, radio buttonid
 
 // 11.02 -- 17 --- proovitöö minupoolne variant
 // 13-17.02 -- 18 --- projekti esitlemine
