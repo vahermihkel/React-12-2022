@@ -37,7 +37,7 @@ function Map(props) {
       />
 
       {shops.map(element => 
-        <Marker position={[element.xCoord, element.yCoord]}>
+        <Marker key={element.name} position={[element.xCoord, element.yCoord]}>
           <Popup>
             {element.name}. <br /> Avatud {element.openTime}-{element.closingTime}
           </Popup>

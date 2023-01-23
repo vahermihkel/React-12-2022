@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
@@ -12,8 +12,14 @@ import MaintainCategories from "./pages/admin/MaintainCategories";
 import MaintainProducts from "./pages/admin/MaintainProducts";
 import MaintainShops from "./pages/admin/MaintainShops";
 import NavigationBar from './components/NavigationBar';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import { useContext } from 'react';
+import AuthContext from './store/AuthContext';
 
 function App() {
+  const authCtx = useContext(AuthContext);
+
   return (
     <div className="App">
       
@@ -25,12 +31,26 @@ function App() {
         <Route path="shops" element={ <Shops /> }  />
         <Route path="contact" element={ <ContactUs /> }  />
         <Route path="product/:productId" element={ <SingleProduct /> }  />
-        <Route path="admin" element={ <AdminHome /> }  />
-        <Route path="admin/add-product" element={ <AddProduct /> }  />
-        <Route path="admin/edit-product/:productId" element={ <EditProduct /> }  />
-        <Route path="admin/maintain-categories" element={ <MaintainCategories /> }  />
-        <Route path="admin/maintain-products" element={ <MaintainProducts /> }  />
-        <Route path="admin/maintain-shops" element={ <MaintainShops /> }  />
+        {authCtx.loggedIn === true && 
+        <>
+          <Route path="login" element={ <Navigate to="/admin" /> }  />
+          <Route path="signup" element={ <Navigate to="/admin" /> }  />
+          <Route path="admin" element={ <AdminHome /> }  />
+          <Route path="admin/add-product" element={ <AddProduct /> }  />
+          <Route path="admin/edit-product/:productId" element={ <EditProduct /> }  />
+          <Route path="admin/maintain-categories" element={ <MaintainCategories /> }  />
+          <Route path="admin/maintain-products" element={ <MaintainProducts /> }  />
+          <Route path="admin/maintain-shops" element={ <MaintainShops /> }  />
+        </>}
+        {authCtx.loggedIn === false && 
+          <>
+            <Route path="admin/*" element={ <Navigate to="/login" /> }  />
+            <Route path="login" element={ <Login /> }  />
+            <Route path="signup" element={ <Signup /> }  />
+          </>
+          }
+        {/* <Route path="*" element={ <Navigate to="/" /> }  /> */}
+        <Route path="*" element={ <div>404 Not Found</div> }  />
       </Routes> 
     </div>
   );
@@ -87,5 +107,8 @@ export default App;
 // peidame ära nupu "Admin vaatesse" kui pole sisse logitud
 // kui minnakse ise localhost:3000/admin , siis suunab viisakalt localhost:3000/login
 
-// 11.02 -- 17 --- proovitöö minupoolne variant
-// 13-17.02 -- 18 --- projekti esitlemine
+// 11.02 -- 17 13.00-16.15 --- proovitöö minupoolne variant
+// 13-17.02 -- 18  13.00-14.30 --- projekti esitlemine
+
+// 1. Reactis tehtud projekt
+// 2. Firebases või kuskil üleval 

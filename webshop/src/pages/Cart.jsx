@@ -11,6 +11,9 @@ function Cart() {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
   const cartSumCtx = useContext(CartSumContext);
 
+  // localStorage-s saan toodete hinda muuta
+  // lahendus: võtame kõik tooted fetch abil ja võtame hinnad hoopis sealt, võtted localStorage-st ID'd
+
   const empty = () => {
     setCart([]);
     localStorage.setItem("cart", JSON.stringify([]));
